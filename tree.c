@@ -140,27 +140,27 @@ void displayPreOrder(struct node *node) {
 
 }
 
-void displayInOrder() {
-	current = head;
-	if(current->left != NULL) {
-		current = left_most_node(current);
+void displayInOrder(struct node *current) {
+	
+	if(current != NULL) {
+		displayInOrder(current->left);
+		printf("%d, ", current->data);
+		displayInOrder(current->right);
 	}
-	printf("%d, ", current->data);
-	current = current->parent;
-	printf("%d, ", current->data);
-	current = current->right;
-	printf("%d, ", current->data);
 	
 }
 
-struct node *left_most_node(struct node *node) {
-
-	node = node->left;
-	while(node != NULL) {
-		node = node->left;
+void displayPostOrder(struct node *current) {
+	
+	if(current != NULL) {
+		displayPostOrder(current->left);
+		displayPostOrder(current->right);
+		printf("%d, ", current->data);
 	}
-	return node;
+	
 }
+
+
 
 
 void main() {
@@ -171,11 +171,15 @@ void main() {
 
 
 	while(choice != 0) {
-		printf("\n---OPTIONS---\n");
-		printf("\n1-->Create a Tree:");
+		printf("\n------------------------");
+		printf("\n     OPTIONS     \n");
+		printf("------------------------\n");
+		printf("\n1-->Create a Tree:\n");
 		printf("\n2-->Display Pre-Order:\n");
 		printf("\n3-->Display In-Order:\n");
+		printf("\n4-->Display Post-Order:\n");
 		printf("\n0-->EXIT\n");
+		printf("\n------------------------\n");
 		printf("\n Enter your Choice: ");
 		
 		scanf("%d", &choice);
@@ -197,7 +201,17 @@ void main() {
 				displayInOrder(head);
 			break;
 
+			case 4:
+				printf("\nTree in Post-Order:\n");
+				displayPostOrder(head);
+			break;
+
+			case 0: 
+				printf("BYE! :-)\n");
+				exit(0);
+			break;
 			default:
+				printf("----OOPS!...INVALID CHOICE----\n");
 			break;
 		}
 	}	
